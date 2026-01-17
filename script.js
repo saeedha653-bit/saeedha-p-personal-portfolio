@@ -95,3 +95,38 @@ window.addEventListener('mousemove', function (e) {
         top: `${posY}px`
     }, { duration: 500, fill: "forwards" });
 });
+
+/* Contact Form Handling */
+// Declare global variable for form submission tracking
+var submitted = false;
+
+const contactForm = document.getElementById('contactForm');
+const popupOverlay = document.getElementById('popupOverlay');
+const closePopup = document.getElementById('closePopup');
+const hiddenIframe = document.getElementById('hidden_iframe');
+
+if (contactForm && popupOverlay && hiddenIframe) {
+    // When the iframe loads (after form submission)
+    hiddenIframe.addEventListener('load', function () {
+        if (submitted) {
+            popupOverlay.classList.add('active');
+            contactForm.reset(); // Clear form
+            submitted = false; // Reset flag
+        }
+    });
+}
+
+if (closePopup) {
+    closePopup.addEventListener('click', () => {
+        popupOverlay.classList.remove('active');
+    });
+}
+
+// Close popup when clicking outside the box
+if (popupOverlay) {
+    popupOverlay.addEventListener('click', (e) => {
+        if (e.target === popupOverlay) {
+            popupOverlay.classList.remove('active');
+        }
+    });
+}
